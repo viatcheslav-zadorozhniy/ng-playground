@@ -1,5 +1,5 @@
 {
-  "name": "@ng-playground/source",
+  "name": "ng-playground",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {},
@@ -26,6 +26,7 @@
     "@angular/cli": "~19.1.0",
     "@angular/compiler-cli": "~19.1.0",
     "@angular/language-service": "~19.1.0",
+    "@angular/localize": "~19.1.0",
     "@eslint/js": "^9.8.0",
     "@nx/angular": "20.4.5",
     "@nx/eslint": "20.4.5",
