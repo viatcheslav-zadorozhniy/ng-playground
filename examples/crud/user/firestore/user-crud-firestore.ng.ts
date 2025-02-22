@@ -5,6 +5,10 @@ import { BaseCrudFirestore } from '../../base';
 import { User } from '../user';
 import { UserCrud } from '../user-crud.ng';
 
+/**
+ * This is an example of a CRUD service for users that uses Firestore.
+ * By extending the `BaseCrudFirestore` class, it reduces the boilerplate code.
+ */
 @Injectable({
   providedIn: 'root'
 })

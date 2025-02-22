@@ -10,4 +10,8 @@ export const USER_ROLES = [
   'user',
 ] as const;
 
+/**
+ * The type of a user role.
+ * It is a union of the roles defined in the `USER_ROLES` array.
+ */
 export type UserRole = typeof USER_ROLES[number];

@@ -15,7 +15,7 @@ import { BaseEntity } from '../base-entity';
  */
 export abstract class BaseCrudFirestore<
   TEntity extends BaseEntity
-> extends BaseCrud<TEntity> {
+> implements BaseCrud<TEntity> {
   protected abstract collectionName: string;
 
   protected readonly firestore = inject(AngularFirestore);

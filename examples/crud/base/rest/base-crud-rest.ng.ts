@@ -13,7 +13,7 @@ import { BaseEntity } from '../base-entity';
  */
 export abstract class BaseCrudRest<
   TEntity extends BaseEntity
-> extends BaseCrud<TEntity> {
+> implements BaseCrud<TEntity> {
   protected abstract entityRoute: string;
 
   protected readonly http = inject(HttpClient);
