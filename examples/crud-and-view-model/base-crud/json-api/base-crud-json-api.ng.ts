@@ -27,9 +27,10 @@ export abstract class BaseCrudJsonApi<
 
   protected readonly http = inject(HttpClient);
   protected readonly apiConfig = inject(API_CONFIG);
+  protected readonly apiVersion = this.apiConfig.version;
 
-  protected get baseEntityUrl() {
-    return `${this.apiConfig.apiUrl}/${this.entityRoute}`;
+  protected get entityUrl() {
+    return `${this.apiConfig.url}/${this.apiVersion}/${this.entityRoute}`;
   }
 
   create(payload: CrudPayload<TEntity>) {
@@ -41,7 +42,7 @@ export abstract class BaseCrudJsonApi<
     };
 
     return this.http
-      .post<JsonApiSingleResponse<TEntity>>(this.baseEntityUrl, body)
+      .post<JsonApiSingleResponse<TEntity>>(this.entityUrl, body)
       .pipe(map(response => {
         const dto = { id: response.data.id, ...response.data.attributes } as TEntity;
         return this.createEntityViewModel(dto);
@@ -50,7 +51,7 @@ export abstract class BaseCrudJsonApi<
 
   read(id: TEntity['id']) {
     return this.http
-      .get<JsonApiSingleResponse<TEntity>>(`${this.baseEntityUrl}/${id}`)
+      .get<JsonApiSingleResponse<TEntity>>(`${this.entityUrl}/${id}`)
       .pipe(map(response => {
         const dto = { id: response.data.id, ...response.data.attributes } as TEntity;
         return this.createEntityViewModel(dto);
@@ -59,7 +60,7 @@ export abstract class BaseCrudJsonApi<
 
   readMany(params?: QueryParams<TEntity>) {
     return this.http
-      .get<JsonApiListResponse<TEntity>>(this.baseEntityUrl, { params: buildJsonApiQueryParams(params) })
+      .get<JsonApiListResponse<TEntity>>(this.entityUrl, { params: buildJsonApiQueryParams(params) })
       .pipe(map(response => {
         const items = response.data.map(resource => {
           const dto = { id: resource.id, ...resource.attributes } as TEntity;
@@ -82,7 +83,7 @@ export abstract class BaseCrudJsonApi<
     };
 
     return this.http
-      .patch<JsonApiSingleResponse<TEntity>>(`${this.baseEntityUrl}/${id}`, body)
+      .patch<JsonApiSingleResponse<TEntity>>(`${this.entityUrl}/${id}`, body)
       .pipe(map(response => {
         const dto = { id: response.data.id, ...response.data.attributes } as TEntity;
         return this.createEntityViewModel(dto);
@@ -90,7 +91,7 @@ export abstract class BaseCrudJsonApi<
   }
 
   delete(id: TEntity['id']) {
-    return this.http.delete<void>(`${this.baseEntityUrl}/${id}`);
+    return this.http.delete<void>(`${this.entityUrl}/${id}`);
   }
 
   protected createEntityViewModel(entity: TEntity) {

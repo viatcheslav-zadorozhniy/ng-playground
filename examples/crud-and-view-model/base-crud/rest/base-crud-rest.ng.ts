@@ -32,28 +32,29 @@ export abstract class BaseCrudRest<
   protected abstract entityRoute: string;
   protected abstract entityViewModel: new (entity: TEntity) => TViewModel;
 
-  protected readonly apiConfig = inject(API_CONFIG);
   protected readonly http = inject(HttpClient);
+  protected readonly apiConfig = inject(API_CONFIG);
+  protected readonly apiVersion = this.apiConfig.version;
 
-  protected get baseEntityUrl() {
-    return `${this.apiConfig.apiUrl}/${this.entityRoute}`;
+  protected get entityUrl() {
+    return `${this.apiConfig.url}/${this.apiVersion}/${this.entityRoute}`;
   }
 
   create(payload: CrudPayload<TEntity>) {
     return this.http
-      .post<TEntity>(this.baseEntityUrl, payload)
+      .post<TEntity>(this.entityUrl, payload)
       .pipe(map(entity => this.createEntityViewModel(entity)));
   }
 
   read(id: TEntity['id']) {
     return this.http
-      .get<TEntity>(`${this.baseEntityUrl}/${id}`)
+      .get<TEntity>(`${this.entityUrl}/${id}`)
       .pipe(map(entity => this.createEntityViewModel(entity)));
   }
 
   readMany(params?: QueryParams<TEntity>) {
     return this.http
-      .get<TEntity[]>(this.baseEntityUrl, { params: buildRestQueryParams(params), observe: 'response' })
+      .get<TEntity[]>(this.entityUrl, { params: buildRestQueryParams(params), observe: 'response' })
       .pipe(
         map(response => {
           const items = (response.body || []).map(dto => this.createEntityViewModel(dto));
@@ -74,12 +75,12 @@ export abstract class BaseCrudRest<
 
   update(id: TEntity['id'], payload: CrudPayload<TEntity>) {
     return this.http
-      .patch<TEntity>(`${this.baseEntityUrl}/${id}`, payload)
+      .patch<TEntity>(`${this.entityUrl}/${id}`, payload)
       .pipe(map(entity => this.createEntityViewModel(entity)));
   }
 
   delete(id: TEntity['id']) {
-    return this.http.delete<void>(`${this.baseEntityUrl}/${id}`);
+    return this.http.delete<void>(`${this.entityUrl}/${id}`);
   }
 
   protected createEntityViewModel(entity: TEntity) {
