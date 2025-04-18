@@ -11,7 +11,9 @@ export {
   JsonApiSingleResponse,
   JsonApiUpdatePayload,
   PaginatedResult,
-  QueryParams
+  QueryParams,
+  validateEntitiesResponse,
+  validateEntityResponse
 } from './api';
 export { BaseEntity } from './base-entity';
 export { User, UserViewModel } from './user';

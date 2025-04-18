@@ -1,22 +1,21 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { BaseCrud } from '../base-crud';
-import { User, UserViewModel } from '../../shared';
 
-import { UserCrudFireStore } from './firestore';
-import { UserCrudRest } from './rest';
+import { PostCrudRest } from './rest';
+import { Post } from './types';
 
 /**
- * This is an example of a CRUD service for users that extends the `BaseCrud` class.
+ * This is an example of a CRUD service for posts that extends the `BaseCrud` class.
  * It is agnostic of the underlying data source (Firestore, RESTful API, etc.).
  * It is easy to switch between different data sources by changing the `useExisting` property.
  * The service consumers do not need to know the implementation details.
  */
 @Injectable({
   providedIn: 'root',
-  useExisting: isDevMode() ? UserCrudFireStore : UserCrudRest
+  useExisting: PostCrudRest
 })
-export abstract class UserCrud extends BaseCrud<User, UserViewModel> {
+export abstract class PostCrud extends BaseCrud<Post> {
   /**
    * The custom abstract methods for the user CRUD service can be added here.
    * They must be implemented in the derived classes.

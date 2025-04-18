@@ -4600,6 +4600,18 @@
   dependencies:
     argparse "^2.0.1"
 
+"@zod/core@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@zod/core/-/core-0.4.3.tgz#11c3f0ff233651bd5804ea87ad3f1cae9cb98c1d"
+  integrity sha512-pv8MkD2WLx96VH22icTWc4WVBDObUpucZkKIKlwqliOx7sB171HvNvP3rCRBWEziyF4RMbAPVKKZzPhitMoFcA==
+
+"@zod/mini@^4.0.0-beta.20250412T084412":
+  version "4.0.0-beta.20250412T084412"
+  resolved "https://registry.yarnpkg.com/@zod/mini/-/mini-4.0.0-beta.20250412T084412.tgz#483d7c8a0dd4c68ec813a01726ba5d3737e57833"
+  integrity sha512-D6DZgQ3KOmnmYA7dUhl/X+2ClEWds15lIvir97VY7XIUqFL4rHgdt++DGjmRoud2Dnxb9EFhwS7O/DVw/6fWwA==
+  dependencies:
+    "@zod/core" "0.4.3"
+
 abab@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"

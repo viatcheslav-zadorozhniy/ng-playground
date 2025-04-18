@@ -9,19 +9,19 @@ import { BaseEntity, buildFirestoreQueryParams, CrudPayload, QueryParams } from 
 /**
  * This is the base class for all CRUD services that use Firebase Firestore.
  *
- * The abstract `collectionName` property must be implemented in the derived class.
+ * The abstract `entityCollectionName` property must be implemented in the derived class.
  * Example:
- * protected override collectionName = 'albums';
+ * protected override entityCollectionName = 'albums';
  */
 export abstract class BaseCrudFirestore<
   TEntity extends BaseEntity
 > implements BaseCrud<TEntity> {
-  protected abstract collectionName: string;
+  protected abstract entityCollectionName: string;
 
   protected readonly firestore = inject(Firestore);
 
   create(payload: CrudPayload<TEntity>) {
-    const collectionRef = collection(this.firestore, this.collectionName);
+    const collectionRef = collection(this.firestore, this.entityCollectionName);
 
     return from(addDoc(collectionRef, payload)).pipe(
       map(documentRef => ({ ...payload, id: documentRef.id } as TEntity))
@@ -36,7 +36,7 @@ export abstract class BaseCrudFirestore<
   }
 
   readMany(params?: QueryParams<TEntity>) {
-    const collectionRef = collection(this.firestore, this.collectionName);
+    const collectionRef = collection(this.firestore, this.entityCollectionName);
     const queryParams = buildFirestoreQueryParams(params);
 
     return from(getDocs(query(collectionRef, ...queryParams))).pipe(
@@ -59,6 +59,6 @@ export abstract class BaseCrudFirestore<
   }
 
   #getDocumentRef(id: TEntity['id']) {
-    return doc(this.firestore, this.collectionName, id);
+    return doc(this.firestore, this.entityCollectionName, id);
   }
 }

@@ -9,4 +9,10 @@ export {
 } from './json-api';
 export { PaginatedResult } from './paginated-result';
 export { QueryParams } from './query-params';
-export { buildFirestoreQueryParams, buildJsonApiQueryParams, buildRestQueryParams } from './utils';
+export {
+  buildFirestoreQueryParams,
+  buildJsonApiQueryParams,
+  buildRestQueryParams,
+  validateEntitiesResponse,
+  validateEntityResponse
+} from './utils';

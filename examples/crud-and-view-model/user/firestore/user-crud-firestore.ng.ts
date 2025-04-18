@@ -15,6 +15,6 @@ export class UserCrudFireStore
   extends BaseCrudFirestore<User, UserViewModel>
   implements UserCrud
 {
-  protected override collectionName = 'users';
+  protected override entityCollectionName = 'users';
   protected override entityViewModel = UserViewModel;
 }

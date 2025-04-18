@@ -27,9 +27,9 @@ import {
 /**
  * This is the base class for all CRUD services that use Firebase Firestore.
  *
- * The abstract `collectionName` property must be implemented in the derived class.
+ * The abstract `entityCollectionName` property must be implemented in the derived class.
  * Example:
- * protected override collectionName = 'users';
+ * protected override entityCollectionName = 'users';
  */
 export abstract class BaseCrudFirestore<
   TEntity extends BaseEntity,
@@ -37,16 +37,16 @@ export abstract class BaseCrudFirestore<
 > implements BaseCrud<TEntity, TViewModel> {
   /**
    * Concrete classes must specify:
-   * - The collection name in the Firestore (`collectionName`).
+   * - The collection name in the Firestore (`entityCollectionName`).
    * - The view model constructor to transform DTOs (`entityViewModel`).
    */
-  protected abstract collectionName: string;
+  protected abstract entityCollectionName: string;
   protected abstract entityViewModel: new (entity: TEntity) => TViewModel;
 
   protected readonly firestore = inject(Firestore);
 
   create(payload: CrudPayload<TEntity>) {
-    const collectionRef = collection(this.firestore, this.collectionName);
+    const collectionRef = collection(this.firestore, this.entityCollectionName);
 
     return from(addDoc(collectionRef, payload)).pipe(
       map(documentRef => this.createEntityViewModel({ ...payload, id: documentRef.id } as TEntity))
@@ -81,11 +81,11 @@ export abstract class BaseCrudFirestore<
   }
 
   #getDocumentRef(id: TEntity['id']) {
-    return doc(this.firestore, this.collectionName, id);
+    return doc(this.firestore, this.entityCollectionName, id);
   }
 
   async #readMany(params?: QueryParams<TEntity>): Promise<PaginatedResult<TViewModel>> {
-    const collectionRef = collection(this.firestore, this.collectionName);
+    const collectionRef = collection(this.firestore, this.entityCollectionName);
     const constraints = buildFirestoreQueryParams(params);
 
     /**

@@ -12,5 +12,5 @@ import { AlbumCrud } from '../album-crud.ng';
   providedIn: 'root'
 })
 export class AlbumCrudFireStore extends BaseCrudFirestore<Album> implements AlbumCrud {
-  protected override collectionName = 'albums';
+  protected override entityCollectionName = 'albums';
 }
