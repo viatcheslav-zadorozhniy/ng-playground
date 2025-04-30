@@ -1,6 +1,6 @@
 import { BaseEntity } from '../base-entity';
 
-export type User = BaseEntity & {
+export interface User extends BaseEntity {
   age: number;
   email: string;
-};
+}

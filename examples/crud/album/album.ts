@@ -1,5 +1,5 @@
 import { BaseEntity } from '../../shared';
 
-export type Album = BaseEntity & {
+export interface Album extends BaseEntity {
   title: string;
-};
+}
